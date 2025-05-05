@@ -3,9 +3,10 @@
 int main(int argc, char **argv)
 {
     t_game game;
+
     if (argc != 2)
     {
-        printf("Usage: %s <map_file>\n", argv[0]);
+        printf("No map\n");
         return (1);
     }
     game.map = read_map(argv[1], &game);
@@ -14,7 +15,12 @@ int main(int argc, char **argv)
         printf("Error: failed to load map\n");
         return (1);
     }
-    for (int i = 0; game.map[i]; i++)
-        printf("%s", game.map[i]);
+    game.mlx = mlx_init();
+	game.win = mlx_new_window(game.mlx, game.width * 32, game.height * 32, "so_long");
+
+    load_images(&game);
+    render_map(&game);
+    mlx_loop(game.mlx);
+    
     return 0;
 }
