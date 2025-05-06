@@ -1,41 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/06 16:06:20 by mokon             #+#    #+#             */
+/*   Updated: 2025/05/06 16:18:55 by mokon            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <unistd.h>
 # include "get_next_line.h"
 # include "minilibx-linux/mlx.h"
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
-typedef struct s_game {
-    void    *mlx;
-    void    *win;
-    char    **map;
-    int     width;
-    int     height;
+typedef struct s_game
+{
+	void	*mlx;
+	void	*win;
+	char	**map;
+	int		width;
+	int		height;
 
-    void    *img_wall;
-    void    *img_floor;
-    void    *img_player;
-    void    *img_exit;
-    void    *img_star;
+	void	*img_wall;
+	void	*img_floor;
+	void	*img_player;
+	void	*img_exit;
+	void	*img_star;
 
-    int     player_x;
-    int     player_y;
+	int		player_x;
+	int		player_y;
 
-    int stars;
-    int moves;
+	int		stars;
+	int		moves;
 
-} t_game;
+}			t_game;
 
-
-int	count_lines(char *filename);
-char **read_map(char *filename, t_game *game);
-void	load_images(t_game *game);
-void	render_map(t_game *game);
-void find_player(t_game *game);
-void move_player(t_game *game, int dx, int dy);
-int key_hook(int keycode, t_game *game);
+int			count_lines(char *filename);
+char		**read_map(char *filename, t_game *game);
+void		load_images(t_game *game);
+void		render_map(t_game *game);
+void		find_player(t_game *game);
+void		move_player(t_game *game, int dx, int dy);
+int			key_hook(int keycode, t_game *game);
 
 #endif

@@ -1,27 +1,49 @@
-#include "so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/06 16:06:00 by mokon             #+#    #+#             */
+/*   Updated: 2025/05/06 16:44:05 by mokon            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
+#include "so_long.h"
 
 void	load_images(t_game *game)
 {
-	int w;
-	int h;
+	int	w;
+	int	h;
 
-	game->img_wall = mlx_xpm_file_to_image(game->mlx, "textures/wall.xpm", &w, &h);
-	game->img_floor = mlx_xpm_file_to_image(game->mlx, "textures/floor.xpm", &w, &h);
-	game->img_player = mlx_xpm_file_to_image(game->mlx, "textures/player.xpm", &w, &h);
-	game->img_exit = mlx_xpm_file_to_image(game->mlx, "textures/exit.xpm", &w, &h);
-	game->img_star = mlx_xpm_file_to_image(game->mlx, "textures/star.xpm", &w, &h);
+	game->img_wall = mlx_xpm_file_to_image(game->mlx, "textures/wall.xpm", &w,
+			&h);
+	game->img_floor = mlx_xpm_file_to_image(game->mlx, "textures/floor.xpm", &w,
+			&h);
+	game->img_player = mlx_xpm_file_to_image(game->mlx, "textures/player.xpm",
+			&w, &h);
+	game->img_exit = mlx_xpm_file_to_image(game->mlx, "textures/exit.xpm", &w,
+			&h);
+	game->img_star = mlx_xpm_file_to_image(game->mlx, "textures/star.xpm", &w,
+			&h);
 }
 
 void	render_map(t_game *game)
 {
-	for (int y = 0; y < game->height; y++)
-	{
-		for (int x = 0; x < game->width; x++)
-		{
-			char tile = game->map[y][x];
-			void *img;
+	int		y;
+	int		x;
+	char	tile;
+	void	*img;
 
+	y = 0;
+	while (y < game->height)
+	{
+		x = 0;
+		while (x < game->width)
+		{
+			tile = game->map[y][x];
 			if (tile == '1')
 				img = game->img_wall;
 			else if (tile == '0')
@@ -33,25 +55,25 @@ void	render_map(t_game *game)
 			else if (tile == 'C')
 				img = game->img_star;
 			else
-				continue;
-
+				continue ;
 			mlx_put_image_to_window(game->mlx, game->win, img, x * 32, y * 32);
+			x++;
 		}
+		y++;
 	}
 }
 
-
 int	count_lines(char *filename)
 {
-	int fd;
-	int count;
+	int		fd;
+	int		count;
+	char	*line;
+
 	count = 0;
-	char *line;
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		return (-1);
 	while ((line = get_next_line(fd)))
-
 	{
 		count++;
 		free(line);
@@ -60,58 +82,50 @@ int	count_lines(char *filename)
 	return (count);
 }
 
-char **read_map(char *filename, t_game *game)
+char	**read_map(char *filename, t_game *game)
 {
-    int fd;
-    char **map;
-    char *line;
-    int i;
-    int j;
+	int		fd;
+	char	**map;
+	char	*line;
+	int		i;
+	int		j;
+	char	*newline;
 
-    i = 0;
-    game->stars = 0;
-
-    fd = open(filename, O_RDONLY);
-    if (fd < 0)
-        return (NULL);
-    
-    game->height = count_lines(filename);
-    if (game->height <= 0)
-        return (NULL);
-
-    map = malloc(sizeof(char *) * (game->height + 1));
-    if (!map)
-        return (NULL);
-
-    while (i < game->height)
-    {
-        line = get_next_line(fd);
-        if (!line)
-            break;
-
-        map[i] = line;
-
-        if (i == 0)
-        {
-            char *newline = ft_strchr(line, '\n');
-            if (newline)
-                game->width = newline - line;
-            else
-                game->width = ft_strlen(line);
-        }
-
-        j = 0;
-        while (j < game->width)
-        {
-            if (line[j] == 'C')
-                game->stars++;
-            j++;
-        }
-
-        i++;   
-    }
-
-    map[i] = NULL;
-    close(fd);
-    return (map);
+	i = 0;
+	game->stars = 0;
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (NULL);
+	game->height = count_lines(filename);
+	if (game->height <= 0)
+		return (NULL);
+	map = malloc(sizeof(char *) * (game->height + 1));
+	if (!map)
+		return (NULL);
+	while (i < game->height)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		map[i] = line;
+		if (i == 0)
+		{
+			newline = ft_strchr(line, '\n');
+			if (newline)
+				game->width = newline - line;
+			else
+				game->width = ft_strlen(line);
+		}
+		j = 0;
+		while (j < game->width)
+		{
+			if (line[j] == 'C')
+				game->stars++;
+			j++;
+		}
+		i++;
+	}
+	map[i] = NULL;
+	close(fd);
+	return (map);
 }

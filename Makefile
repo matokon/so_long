@@ -1,13 +1,15 @@
 NAME = so_long
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -Ignl
 
 MLX_DIR = minilibx-linux
 MLX_LIB = $(MLX_DIR)/libmlx.a
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 
-SRCS = main.c player_movement.c get_next_line.c get_next_line_utils.c map.c
+SRCS = main.c player_movement.c map.c \
+	gnl/get_next_line.c gnl/get_next_line_utils.c
+
 OBJS = $(SRCS:.c=.o)
 
 $(NAME): $(OBJS) $(MLX_LIB)
