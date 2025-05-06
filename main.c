@@ -3,7 +3,8 @@
 int main(int argc, char **argv)
 {
     t_game game;
-
+    game.stars = 0;
+    game.moves = 0;
     if (argc != 2)
     {
         printf("No map\n");
@@ -17,9 +18,11 @@ int main(int argc, char **argv)
     }
     game.mlx = mlx_init();
 	game.win = mlx_new_window(game.mlx, game.width * 32, game.height * 32, "so_long");
-
+    
+    find_player(&game);
     load_images(&game);
     render_map(&game);
+    mlx_hook(game.win, 2, 1L << 0, key_hook, &game);
     mlx_loop(game.mlx);
     
     return 0;

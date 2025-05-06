@@ -23,6 +23,10 @@ typedef struct s_game {
 
     int     player_x;
     int     player_y;
+
+    int stars;
+    int moves;
+
 } t_game;
 
 
@@ -30,5 +34,8 @@ int	count_lines(char *filename);
 char **read_map(char *filename, t_game *game);
 void	load_images(t_game *game);
 void	render_map(t_game *game);
+void find_player(t_game *game);
+void move_player(t_game *game, int dx, int dy);
+int key_hook(int keycode, t_game *game);
 
 #endif

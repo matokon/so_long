@@ -7,7 +7,7 @@ MLX_DIR = minilibx-linux
 MLX_LIB = $(MLX_DIR)/libmlx.a
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 
-SRCS = main.c read_map.c get_next_line.c get_next_line_utils.c map.c
+SRCS = main.c player_movement.c get_next_line.c get_next_line_utils.c map.c
 OBJS = $(SRCS:.c=.o)
 
 $(NAME): $(OBJS) $(MLX_LIB)
