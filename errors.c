@@ -6,7 +6,7 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 12:11:04 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/07 17:00:03 by mokon            ###   ########.fr       */
+/*   Updated: 2025/05/07 20:24:48 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,29 @@ int	map_verification(char **map)
 			if (map[i][j] == 'C' || map[i][j] == 'E')
 			{
 				printf("Error: map is not playable\n");
-				exit(0);
+				exit(1);
 			}
 			j++;
 		}
 		i++;
 	}
 	return (1);
+}
+
+int border_checker(char **map, int width)
+{	
+	int flag;
+	flag = 0;
+	int i;
+	i = 0;
+	int j;
+	j = 0;
+	while(map[i])
+	{
+		if (map[0][i] != '1')
+		{
+			printf("Error: map is not surrounded by walls.\n");
+			exit(1);
+		}
+	}
 }
