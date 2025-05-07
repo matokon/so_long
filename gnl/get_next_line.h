@@ -6,7 +6,7 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:04:58 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/05 13:43:16 by mokon            ###   ########.fr       */
+/*   Updated: 2025/05/07 12:51:23 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	*ft_calloc(size_t nmemb, size_t size);
 void	ft_bzero(void *s, size_t n);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char *s1, char *s2);
-int		ft_strlen(char *str);
+int		ft_strlen(const char *str);
 char	*get_next_line(int fd);
+char	*ft_strdup(const char *s);
 #endif

@@ -6,13 +6,13 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:05:09 by mokon             #+#    #+#             */
-/*   Updated: 2025/03/03 20:16:53 by mokon            ###   ########.fr       */
+/*   Updated: 2025/05/07 12:51:07 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen(char *str)
+int	ft_strlen(const char *str)
 {
 	int	i;
 
@@ -92,4 +92,24 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		return (p);
 	ft_bzero(p, size * nmemb);
 	return (p);
+}
+
+char	*ft_strdup(const char *s)
+{
+	char	*dup;
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	dup = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!dup)
+		return (NULL);
+	while (s[i])
+	{
+		dup[i] = s[i];
+		i++;
+	}
+	dup[i] = '\0';
+	return (dup);
 }

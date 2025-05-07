@@ -6,7 +6,7 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:06:10 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/06 16:17:05 by mokon            ###   ########.fr       */
+/*   Updated: 2025/05/07 12:10:28 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	move_player(t_game *game, int dx, int dy)
 	{
 		if (game->stars == 0)
 		{
+			printf("Moves: %d\n", game->moves+1);
 			printf("You won!\n");
 			exit(0);
 		}

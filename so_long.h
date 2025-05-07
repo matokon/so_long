@@ -6,7 +6,7 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:06:20 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/06 16:18:55 by mokon            ###   ########.fr       */
+/*   Updated: 2025/05/07 16:33:04 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,8 @@ void		render_map(t_game *game);
 void		find_player(t_game *game);
 void		move_player(t_game *game, int dx, int dy);
 int			key_hook(int keycode, t_game *game);
-
+char		**copy_map(char **og_map, int height);
+void		flood_fill(char **map, int player_x, int player_y, int width,
+				int height);
+int			map_verification(char **map);
 #endif
