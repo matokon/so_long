@@ -6,7 +6,7 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:04:58 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/07 12:51:23 by mokon            ###   ########.fr       */
+/*   Updated: 2025/05/08 21:39:14 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,7 @@ char	*ft_strjoin(char *s1, char *s2);
 int		ft_strlen(const char *str);
 char	*get_next_line(int fd);
 char	*ft_strdup(const char *s);
+void	ft_putnbr(int n);
+void	ft_putchar(char c);
+
 #endif

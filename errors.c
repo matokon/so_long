@@ -6,7 +6,7 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 12:11:04 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/08 19:52:29 by mokon            ###   ########.fr       */
+/*   Updated: 2025/05/08 21:32:58 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	map_verification(char **map, t_game game)
 		{
 			if (map[i][j] == 'C' || map[i][j] == 'E')
 			{
-				printf("Error: map is not playable\n");
+				write(1,"Error: map is not playable\n",27);
 				exit(1);
 			}
 			j++;
@@ -74,7 +74,7 @@ int	map_verification(char **map, t_game game)
 	}
 	if (border_checker(map, game))
 	{
-		printf("Error: map is not playable\n");
+		write(1,"Error: map is not playable\n",27);
 		exit(1);
 	}
 	return (1);

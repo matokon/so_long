@@ -6,7 +6,7 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 19:42:23 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/08 19:51:39 by mokon            ###   ########.fr       */
+/*   Updated: 2025/05/08 21:32:57 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	close_window(t_game *game)
 	return (0);
 }
 
-int	print_error_and_exit(char *message)
+int	print_error_and_exit(char *message,  int len)
 {
-	printf("%s\n", message);
+	write(1,message,len + 1);
 	return (1);
 }

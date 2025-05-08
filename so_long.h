@@ -6,7 +6,7 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:06:20 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/08 20:45:29 by mokon            ###   ########.fr       */
+/*   Updated: 2025/05/08 21:40:50 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "get_next_line.h"
 # include "minilibx-linux/mlx.h"
 # include <fcntl.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
@@ -56,7 +55,7 @@ int			map_verification(char **map, t_game game);
 int			border_checker(char **map, t_game game);
 int			close_window(t_game *game);
 int			border_lower_helper(char **map, t_game game);
-int			print_error_and_exit(char *message);
+int			print_error_and_exit(char *message, int len);
 void		move_player_helper(t_game *game, int new_x, int new_y);
 void		*get_image_for_tile(char tile, t_game *game);
 char		**allocate_map(char *filename, t_game *game);
