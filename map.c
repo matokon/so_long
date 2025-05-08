@@ -6,7 +6,7 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:06:00 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/07 19:42:57 by mokon            ###   ########.fr       */
+/*   Updated: 2025/05/08 19:48:45 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,21 @@ void	load_images(t_game *game)
 			&h);
 }
 
+void	*get_image_for_tile(char tile, t_game *game)
+{
+	if (tile == '1')
+		return (game->img_wall);
+	else if (tile == '0')
+		return (game->img_floor);
+	else if (tile == 'P')
+		return (game->img_player);
+	else if (tile == 'E')
+		return (game->img_exit);
+	else if (tile == 'C')
+		return (game->img_star);
+	return (NULL);
+}
+
 void	render_map(t_game *game)
 {
 	int		y;
@@ -44,19 +59,10 @@ void	render_map(t_game *game)
 		while (x < game->width)
 		{
 			tile = game->map[y][x];
-			if (tile == '1')
-				img = game->img_wall;
-			else if (tile == '0')
-				img = game->img_floor;
-			else if (tile == 'P')
-				img = game->img_player;
-			else if (tile == 'E')
-				img = game->img_exit;
-			else if (tile == 'C')
-				img = game->img_star;
-			else
-				continue ;
-			mlx_put_image_to_window(game->mlx, game->win, img, x * 32, y * 32);
+			img = get_image_for_tile(tile, game);
+			if (img)
+				mlx_put_image_to_window(game->mlx, game->win, img, x * 32, y
+					* 32);
 			x++;
 		}
 		y++;

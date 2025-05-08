@@ -6,7 +6,7 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 12:11:04 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/07 20:24:48 by mokon            ###   ########.fr       */
+/*   Updated: 2025/05/08 19:52:29 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,13 @@ char	**copy_map(char **og_map, int height)
 	return (copy);
 }
 
-void	flood_fill(char **map, int player_x, int player_y, int width,
-		int height)
+void	flood_fill(char **map, t_game game, int player_x, int player_y)
 {
+	int	width;
+	int	height;
+
+	width = game.width;
+	height = game.height;
 	if (player_x < 0 || player_y < 0 || player_x >= width || player_y >= height)
 		return ;
 	if (map[player_y][player_x] == '1' || map[player_y][player_x] == 'X')
@@ -42,13 +46,13 @@ void	flood_fill(char **map, int player_x, int player_y, int width,
 	if (map[player_y][player_x] == '0' || map[player_y][player_x] == 'C'
 		|| map[player_y][player_x] == 'E' || map[player_y][player_x] == 'P')
 		map[player_y][player_x] = 'X';
-	flood_fill(map, player_x, player_y + 1, width, height);
-	flood_fill(map, player_x, player_y - 1, width, height);
-	flood_fill(map, player_x + 1, player_y, width, height);
-	flood_fill(map, player_x - 1, player_y, width, height);
+	flood_fill(map, game, player_x, player_y + 1);
+	flood_fill(map, game, player_x, player_y - 1);
+	flood_fill(map, game, player_x + 1, player_y);
+	flood_fill(map, game, player_x - 1, player_y);
 }
 
-int	map_verification(char **map)
+int	map_verification(char **map, t_game game)
 {
 	int	i;
 	int	j;
@@ -68,23 +72,54 @@ int	map_verification(char **map)
 		}
 		i++;
 	}
+	if (border_checker(map, game))
+	{
+		printf("Error: map is not playable\n");
+		exit(1);
+	}
 	return (1);
 }
 
-int border_checker(char **map, int width)
-{	
-	int flag;
-	flag = 0;
-	int i;
-	i = 0;
-	int j;
-	j = 0;
-	while(map[i])
+int	border_checker(char **map, t_game game)
+{
+	int	h;
+	int	y;
+	int	len;
+
+	h = 0;
+	y = game.height;
+	while (h < game.height - 1)
 	{
-		if (map[0][i] != '1')
-		{
-			printf("Error: map is not surrounded by walls.\n");
-			exit(1);
-		}
+		len = ft_strlen(map[h]);
+		if (map[h][0] != '1' || map[h][game.width - 1] != '1' || len
+			- 1 != game.width)
+			return (1);
+		h++;
 	}
+	h = 0;
+	while (map[0][h] < game.width)
+	{
+		if (map[0][h] != '1' || map[game.height - 1][h] != '1')
+			return (1);
+		h++;
+	}
+	if (border_lower_helper(map, game))
+		return (1);
+	return (0);
+}
+
+int	border_lower_helper(char **map, t_game game)
+{
+	int	h;
+	int	i;
+
+	h = game.height - 1;
+	i = 0;
+	while (map[h][i])
+	{
+		if (map[h][i] != '1')
+			return (1);
+		i++;
+	}
+	return (0);
 }
