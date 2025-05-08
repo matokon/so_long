@@ -6,7 +6,7 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:06:00 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/08 19:48:45 by mokon            ###   ########.fr       */
+/*   Updated: 2025/05/08 20:58:10 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,36 +69,11 @@ void	render_map(t_game *game)
 	}
 }
 
-int	count_lines(char *filename)
-{
-	int		fd;
-	int		count;
-	char	*line;
-
-	count = 0;
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		return (-1);
-	while ((line = get_next_line(fd)))
-	{
-		count++;
-		free(line);
-	}
-	close(fd);
-	return (count);
-}
-
-char	**read_map(char *filename, t_game *game)
+char	**allocate_map(char *filename, t_game *game)
 {
 	int		fd;
 	char	**map;
-	char	*line;
-	int		i;
-	int		j;
-	char	*newline;
 
-	i = 0;
-	game->stars = 0;
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		return (NULL);
@@ -107,7 +82,25 @@ char	**read_map(char *filename, t_game *game)
 		return (NULL);
 	map = malloc(sizeof(char *) * (game->height + 1));
 	if (!map)
+	{
+		close(fd);
 		return (NULL);
+	}
+	return (map);
+}
+
+char	**read_map(char *filename, t_game *game)
+{
+	int		fd;
+	char	**map;
+	char	*line;
+	int		i;
+
+	i = 0;
+	map = allocate_map(filename, game);
+	if (!map)
+		return (NULL);
+	fd = open(filename, O_RDONLY);
 	while (i < game->height)
 	{
 		line = get_next_line(fd);
@@ -115,20 +108,8 @@ char	**read_map(char *filename, t_game *game)
 			break ;
 		map[i] = line;
 		if (i == 0)
-		{
-			newline = ft_strchr(line, '\n');
-			if (newline)
-				game->width = newline - line;
-			else
-				game->width = ft_strlen(line);
-		}
-		j = 0;
-		while (j < game->width)
-		{
-			if (line[j] == 'C')
-				game->stars++;
-			j++;
-		}
+			set_map_width(line, game);
+		process_map_line(line, game);
 		i++;
 	}
 	map[i] = NULL;
