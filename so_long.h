@@ -6,7 +6,7 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:06:20 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/08 21:40:50 by mokon            ###   ########.fr       */
+/*   Updated: 2025/05/09 12:46:17 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,16 @@ int			map_verification(char **map, t_game game);
 int			border_checker(char **map, t_game game);
 int			close_window(t_game *game);
 int			border_lower_helper(char **map, t_game game);
-int			print_error_and_exit(char *message, int len);
+int			print_error_and_exit(t_game *game, char **map, char *message,
+				int len);
+int			print_no_map_error(char *message, int len);
 void		move_player_helper(t_game *game, int new_x, int new_y);
 void		*get_image_for_tile(char tile, t_game *game);
 char		**allocate_map(char *filename, t_game *game);
 void		set_map_width(char *line, t_game *game);
 void		process_map_line(char *line, t_game *game);
+void		free_map(char **map);
+char		**write_error(char *msg, size_t len, char **map);
+int			validate_player_and_exit(char **map);
+int			validate_map(char **map);
 #endif

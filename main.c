@@ -6,30 +6,43 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:05:46 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/08 21:33:30 by mokon            ###   ########.fr       */
+/*   Updated: 2025/05/09 13:05:30 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+static int	init_and_validate(t_game *game, int argc, char **argv)
+{
+	if (argc != 2)
+		return (print_no_map_error("Error\n: No map", 15));
+	ft_bzero(game, sizeof(t_game));
+	game->map = read_map(argv[1], game);
+	if (!game->map)
+		return (print_error_and_exit(game, game->map,
+				"Error\n: failed to load map", 27));
+	if (game->stars < 1)
+		return (print_error_and_exit(game, game->map,
+				"Error\n: The map has too few stars.", 35));
+	find_player(game);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_game	game;
-	char	**copy_of_map;
+	char	**copy;
 
-	game.stars = 0;
-	game.moves = 0;
-	if (argc != 2)
-		return (print_error_and_exit("Error: No map", 13));
-	game.map = read_map(argv[1], &game);
-	if (!game.map)
-		return (print_error_and_exit("Error: failed to load map", 25));
-	if (game.stars < 1)
-		return (print_error_and_exit("Error: The map has too few stars.", 33));
-	find_player(&game);
-	copy_of_map = copy_map(game.map, game.height);
-	flood_fill(copy_of_map, game, game.player_x, game.player_y);
-	map_verification(copy_of_map, game);
+	if (init_and_validate(&game, argc, argv))
+		return (1);
+	copy = copy_map(game.map, game.height);
+	if (validate_map(copy))
+		return (free_map(copy), close_window(&game), 1);
+	if (validate_player_and_exit(copy))
+		return (free_map(copy), close_window(&game), 1);
+	flood_fill(copy, game, game.player_x, game.player_y);
+	map_verification(copy, game);
+	free_map(copy);
 	game.mlx = mlx_init();
 	game.win = mlx_new_window(game.mlx, game.width * 32, game.height * 32,
 			"so_long");

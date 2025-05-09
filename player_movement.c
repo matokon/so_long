@@ -6,7 +6,7 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:06:10 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/08 21:43:22 by mokon            ###   ########.fr       */
+/*   Updated: 2025/05/09 11:56:16 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ void	move_player(t_game *game, int dx, int dy)
 	{
 		if (game->stars == 0)
 		{
-			write(1,"Moves: ",7);
+			write(1, "Moves: ", 7);
 			ft_putnbr(game->moves + 1);
-			write(1,"\n",1);
-			write(1,"You won!\n",8);
+			write(1, "\nYou won!\n", 9);
+			close_window(game);
 			exit(0);
 		}
 		else
@@ -73,16 +73,16 @@ void	move_player_helper(t_game *game, int new_x, int new_y)
 	game->player_x = new_x;
 	game->player_y = new_y;
 	game->moves++;
-	write(1,"Moves: ",7);
+	write(1, "Moves: ", 7);
 	ft_putnbr(game->moves);
-	write(1,"\n",1);
+	write(1, "\n", 1);
 	render_map(game);
 }
 
 int	key_hook(int keycode, t_game *game)
 {
 	if (keycode == 65307)
-		exit(0);
+		close_window(game);
 	else if (keycode == 119)
 		move_player(game, 0, -1);
 	else if (keycode == 97)

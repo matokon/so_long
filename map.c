@@ -6,7 +6,7 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:06:00 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/08 20:58:10 by mokon            ###   ########.fr       */
+/*   Updated: 2025/05/09 12:50:09 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,11 @@ char	**read_map(char *filename, t_game *game)
 	if (!map)
 		return (NULL);
 	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+	{
+		write(1, "Error\nFailed to open map\n", 26);
+		return (NULL);
+	}
 	while (i < game->height)
 	{
 		line = get_next_line(fd);

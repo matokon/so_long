@@ -6,7 +6,7 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 20:07:35 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/08 20:57:35 by mokon            ###   ########.fr       */
+/*   Updated: 2025/05/09 13:09:45 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,54 @@ void	process_map_line(char *line, t_game *game)
 			game->stars++;
 		j++;
 	}
+}
+int validate_map(char **map)
+{
+    int y = 0;
+    int x;
+
+    while (map[y])
+    {
+        x = 0;
+        while (map[y][x])
+        {
+            if (map[y][x] != 'P' && map[y][x] != '1' && map[y][x] != '0'
+                && map[y][x] != 'C' && map[y][x] != 'E' && map[y][x] != '\n')
+            {
+                write(1, "Error\nInvalid character", 23);
+                return(1);
+            }
+            x++;
+        }
+        y++;
+    }
+    return (0);
+}
+
+int	validate_player_and_exit(char **map)
+{
+	int	player_count = 0;
+	int	exit_count = 0;
+	int	y = 0;
+	int	x;
+
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if (map[y][x] == 'P')
+				player_count++;
+			else if (map[y][x] == 'E')
+				exit_count++;
+			x++;
+		}
+		y++;
+	}
+	if (player_count != 1 || exit_count != 1)
+	{
+		write(1, "Error\nMap must contain exactly 1 player and 1 exit\n", 51);
+		return (1);
+	}
+	return (0);
 }
