@@ -6,7 +6,7 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:06:20 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/09 12:46:17 by mokon            ###   ########.fr       */
+/*   Updated: 2025/05/09 13:16:12 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct s_game
 
 int			count_lines(char *filename);
 char		**read_map(char *filename, t_game *game);
+char		**read_map_lines(int fd, t_game *game, char **map);
+char		**allocate_and_open_map(char *filename, t_game *game, int *fd);
 void		load_images(t_game *game);
 void		render_map(t_game *game);
 void		find_player(t_game *game);
