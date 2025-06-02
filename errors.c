@@ -6,7 +6,7 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 12:11:04 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/09 12:46:21 by mokon            ###   ########.fr       */
+/*   Updated: 2025/06/02 16:28:22 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,9 @@ void	flood_fill(char **map, t_game game, int player_x, int player_y)
 	height = game.height;
 	if (player_x < 0 || player_y < 0 || player_x >= width || player_y >= height)
 		return ;
-	if (map[player_y][player_x] == '1' || map[player_y][player_x] == 'X')
+	if (map[player_y][player_x] == '1' || map[player_y][player_x] == 'X' || map[player_y][player_x] == 'E' )
 		return ;
-	if (map[player_y][player_x] == '0' || map[player_y][player_x] == 'C'
-		|| map[player_y][player_x] == 'E' || map[player_y][player_x] == 'P')
-		map[player_y][player_x] = 'X';
+	map[player_y][player_x] = 'X';
 	flood_fill(map, game, player_x, player_y + 1);
 	flood_fill(map, game, player_x, player_y - 1);
 	flood_fill(map, game, player_x + 1, player_y);
@@ -56,26 +54,37 @@ int	map_verification(char **map, t_game game)
 {
 	int	i;
 	int	j;
-
+	int flag;
+	flag = 0;
 	i = 0;
 	while (map[i])
 	{
 		j = 0;
 		while (map[i][j])
 		{
-			if (map[i][j] == 'C' || map[i][j] == 'E')
+			if (map[i][j] == 'C')
 			{
 				write(1, "Error\n: map is not playable\n", 27);
 				free_map(map);
+				return (0);
+			}
+			if(map[i][j] == 'E')
+			{
+				if ((map[i+1][j] == 'X' && i+1 < game.height) ||
+					 (map[i-1][j] == 'X' && i-1 >= 0)
+					 || (map[i][j+1] == 'X' && j+1 < game.width)
+					 || (map[i][j-1] == 'X' && j-1 >= 0))
+					flag = 1;
 			}
 			j++;
 		}
 		i++;
 	}
-	if (border_checker(map, game))
+	if (border_checker(map, game) || flag == 0)
 	{
 		write(1, "Error\n: map is not playable\n", 27);
 		free_map(map);
+		return (0);
 	}
 	return (1);
 }
@@ -83,11 +92,9 @@ int	map_verification(char **map, t_game game)
 int	border_checker(char **map, t_game game)
 {
 	int	h;
-	int	y;
 	int	len;
 
 	h = 0;
-	y = game.height;
 	while (h < game.height - 1)
 	{
 		len = ft_strlen(map[h]);
