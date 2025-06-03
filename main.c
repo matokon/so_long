@@ -6,7 +6,7 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:05:46 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/09 13:05:30 by mokon            ###   ########.fr       */
+/*   Updated: 2025/06/03 12:09:03 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static int	init_and_validate(t_game *game, int argc, char **argv)
 	ft_bzero(game, sizeof(t_game));
 	game->map = read_map(argv[1], game);
 	if (!game->map)
-		return (print_error_and_exit(game, game->map,
+		return (print_error_and_exit(game,
 				"Error\n: failed to load map", 27));
 	if (game->stars < 1)
-		return (print_error_and_exit(game, game->map,
+		return (print_error_and_exit(game,
 				"Error\n: The map has too few stars.", 35));
 	find_player(game);
 	return (0);

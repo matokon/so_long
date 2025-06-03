@@ -6,7 +6,7 @@
 /*   By: mokon <mokon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:05:09 by mokon             #+#    #+#             */
-/*   Updated: 2025/05/09 12:07:57 by mokon            ###   ########.fr       */
+/*   Updated: 2025/06/03 10:52:07 by mokon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,44 +92,4 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		return (p);
 	ft_bzero(p, size * nmemb);
 	return (p);
-}
-
-char	*ft_strdup(const char *s)
-{
-	char	*dup;
-	size_t	i;
-
-	i = 0;
-	if (!s)
-		return (NULL);
-	dup = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (!dup)
-		return (NULL);
-	while (s[i])
-	{
-		dup[i] = s[i];
-		i++;
-	}
-	dup[i] = '\0';
-	return (dup);
-}
-
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-
-void	ft_putnbr(int n)
-{
-	long	num;
-
-	num = n;
-	if (num < 0)
-	{
-		ft_putchar('-');
-		num *= -1;
-	}
-	if (num >= 10)
-		ft_putnbr(num / 10);
-	ft_putchar((num % 10) + '0');
 }
